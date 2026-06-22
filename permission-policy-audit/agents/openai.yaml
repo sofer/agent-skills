@@ -1,0 +1,4 @@
+interface:
+  display_name: "Permission Policy Audit"
+  short_description: "Compare agent permission policies"
+  default_prompt: "Use $permission-policy-audit to compare Codex and Claude permission policies and report significant drift."

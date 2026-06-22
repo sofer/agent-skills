@@ -1,0 +1,4 @@
+interface:
+  display_name: "Module visuals"
+  short_description: "Design module diagrams and animations one at a time"
+  default_prompt: "Design a visual for this module concept before generating any asset."

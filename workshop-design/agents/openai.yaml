@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workshop design"
+  short_description: "Create a story-first workshop brief and derive teaching artefacts"
+  default_prompt: "Design this workshop from a shared story brief before producing artefacts."

@@ -57,6 +57,21 @@ else
   rm -rf "$ROOT/.claude/skills/private" "$ROOT/.codex/skills/private"
 fi
 
+# Drift watch: warn (to stderr) about unpushed edits in the local authoring
+# clones, so skill changes do not silently diverge from the remotes. Absent
+# dirs are skipped, so this is a no-op on the phone and machines without them.
+for authoring in "$HOME/code/agent-skills" "$HOME/code/skills"; do
+  [ -d "$authoring/.git" ] || continue
+  dirty="$(git -C "$authoring" status --porcelain 2>/dev/null || true)"
+  ahead=""
+  if git -C "$authoring" rev-parse '@{u}' >/dev/null 2>&1; then
+    ahead="$(git -C "$authoring" log --oneline '@{u}..HEAD' 2>/dev/null || true)"
+  fi
+  if [ -n "$dirty" ] || [ -n "$ahead" ]; then
+    echo "⚠️  skills drift: $authoring has unpushed edits — run: bash \"$HOME/code/agent-skills/tooling/skills-publish.sh\" \"$authoring\"" >&2
+  fi
+done
+
 if [ -n "${CLAUDE_PROJECT_DIR:-}" ]; then
   echo '{"hookSpecificOutput": {"hookEventName": "SessionStart", "reloadSkills": true}}'
 fi

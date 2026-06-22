@@ -41,6 +41,24 @@ To have a project repo refresh skills automatically on every session start, use 
 
 A consuming repo keeps its own committed bootstrap copy of `sync-skills.sh` (the hook needs the script present before the first clone). When the canonical scripts here change, re-run the installer in a consuming repo to refresh its copy.
 
+## Editing skills (and avoiding drift)
+
+Skills are pulled automatically on every session start, but **edits are pushed deliberately** so nothing auto-commits behind your back. Edit in full authoring clones, one per repo, rather than in the throwaway synced copies:
+
+```bash
+git clone https://github.com/sofer/agent-skills.git ~/code/agent-skills   # generic skills
+git clone git@github.com:sofer/skills.git           ~/code/skills          # private skills
+```
+
+- `tooling/skills-publish.sh` — commit and push edits in an authoring clone (pulls ff-only first, then commits and pushes). Run it from the clone, or pass a path:
+  ```bash
+  bash ~/code/agent-skills/tooling/skills-publish.sh "Add foo skill"
+  bash ~/code/agent-skills/tooling/skills-publish.sh ~/code/skills "Update bar"
+  # optional convenience:
+  alias skills-publish='bash ~/code/agent-skills/tooling/skills-publish.sh'
+  ```
+- **Drift watch:** `sync-skills.sh` checks `~/code/agent-skills` and `~/code/skills` at every session start and prints a warning if either has uncommitted or unpushed edits, so you are reminded to publish before the change diverges from the remote. It is a no-op where those clones do not exist (e.g. cloud/mobile).
+
 ## Notes
 
 - These are personal but generic skills. Some may reference particular tools and need adapting for other setups.

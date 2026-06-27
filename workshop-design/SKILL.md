@@ -1,6 +1,6 @@
 ---
 name: workshop-design
-description: Use when creating, redesigning, or preparing any workshop-like learning experience, public or private; build the story through brief, synopsis, website copy, LinkedIn post, slide beats, captions, questions, figures, and a Slidev rehearsal deck before module or delivery artefacts.
+description: Use when creating, redesigning, or preparing any workshop-like learning experience. Builds four artefacts in sequence — discussion.md, questions.md, narrative.md, slides.md — before public copy, visuals, module, and delivery artefacts.
 ---
 
 # Workshop design
@@ -9,68 +9,37 @@ Use this as the upstream orchestrator for workshop-like learning experiences:
 open workshops, cohort workshops, employer sessions, internal sessions, and
 platform modules built around active learner participation.
 
-The core rule is: one workshop story, many artefacts. Build the public-facing
-story first, then derive the teaching materials from it.
-
-If a `narrative.md` produced by the `narrative` skill already exists for this
-topic, read it first and use it as the source of the story arc and beats. The
-narrative spine is the upstream recall-first object; the brief, synopsis, and
-slides derive from it rather than reinventing the arc. If no spine exists and
-the topic is still loose, consider building one with `narrative` before the
-brief.
+The core rule is: one workshop story, many artefacts. The first three artefacts
+come from the `narrative` skill and must exist before anything else is built.
 
 ## Workflow
 
-1. **Dialogue**
-   Use `dialogue` behaviour first. Work through the topic conversationally, one
-   question or claim at a time. Do not assume whether the user or the agent has
-   the important knowledge. Reflect, challenge, correct, and refine until there
-   is enough shared understanding to design.
+The four upstream artefacts, in order:
 
-2. **Active learner anchor**
-   Establish what learners will build, inspect, reconstruct, test, or argue
-   with. The learner action anchors the story and keeps history from becoming
-   passive background.
+1. **Grilling and discussion** (`discussion.md`)
+   Use the `narrative` skill. Work through the topic conversationally, surfacing
+   what the user finds hard, where understanding breaks down, key ambiguities,
+   and the concepts most important to a learner. Produces `discussion.md`: a
+   concise record of the session that contains enough information to derive the
+   questions.
 
-3. **Historical or conceptual lineage**
-   Work out the story that makes the workshop worth caring about:
-   - the historical seed, paper, person, system, or conceptual starting point
-   - the problem people were trying to solve
-   - the breakthrough or turning point
-   - the limitation, failure case, or unresolved tension
-   - the later developments that follow from that limitation
+2. **Questions** (`questions.md`)
+   Still within the `narrative` skill. From `discussion.md`, produce a series of
+   atomic Q&A pairs, one per important concept. Each entry: a question that
+   probes the concept precisely, and a concise correct answer optimised for
+   recall. These questions anchor the narrative and every downstream artefact.
 
-4. **Workshop story brief**
-   Produce a short durable brief before any downstream artefact:
+3. **Narrative** (`narrative.md`)
+   Still within the `narrative` skill. Turn the questions into a story arc.
+   `narrative.md` contains two sections: the **core** (numbered beats, whiteboard
+   exercises) and the **extension** (E-numbered beats covering the remaining
+   questions pool). `slides.md` draws from the core only. `module.md` covers
+   everything: the full core and then the extension. Read `narrative.md` before
+   building anything downstream — it is the source of truth for framing,
+   vocabulary, beat order, and the core/extension split.
 
-   ```text
-   Topic:
-   What learners will build:
-   Why this build:
-   Historical seed:
-   Original problem:
-   Breakthrough:
-   Limitation:
-   Later developments:
-   Learner role:
-   Learner promise:
-   Open questions:
-   ```
-
-   Keep it concise. It is the source of truth for later copy, slides, module
-   content, visuals, and delivery notes.
-
-5. **Public story artefacts**
-   After the brief, create the public-facing story artefacts before detailed
-   teaching content:
-   - `synopsis.md`
-   - `website.md`
-   - `linkedin.md`
-
-   These artefacts force the main storyline to become clear before the deck,
-   figures, or learner-facing module are built.
-
-6. **Story-led slide production**
+4. **Slides** (`slides.md`)
+   Evolve the narrative into a slide beat plan:
    After the earlier story artefacts are in place, use this order of play for
    the live workshop deck:
 
@@ -106,9 +75,19 @@ brief.
    unless the choices are genuinely part of the reasoning task.
 
    Save slide beats, figure captions, and slide questions in
-   `workshops/<short-name>/slides.md` until they are compiled into the Slidev
+   `curriculum/<topic>/slides.md` until they are compiled into the Slidev
    deck. Use one section per slide beat, and keep the beat text available as the
    future speaker note.
+
+5. **Website** (`website.md`)
+   Write the public workshop description. Derive the framing from `narrative.md`,
+   not from scratch. Include the hook, what learners will do, and practical
+   details.
+
+6. **LinkedIn** (`linkedin.md`)
+   Write the LinkedIn post for the workshop. One post per variant or run. Derive
+   voice and hook from the narrative through-line. Use `linkedin-workshop-posts`
+   skill when ready to produce.
 
 7. **Module build spine**
    When the workshop has a learner-facing module, design or revise the module
@@ -120,7 +99,7 @@ brief.
    workshops, decide what learners will run, inspect, modify, and verify, and
    validate runnable snippets before treating downstream artefacts as final.
 
-8. **Teaching plan**
+8. **Teaching plan** *(evolving — use when it helps coordination)*
    When a coordination record is useful, create or update `teaching-plan.md`
    after the story-led slide path has started. It should reflect the settled
    story beats, captions, questions, figures, deck structure, module expansion
@@ -189,8 +168,8 @@ brief.
    ## Open decisions
    ```
 
-9. **Teaching spine**
-   Turn the brief, module spine, and teaching plan into the live-learning
+9. **Teaching spine** *(evolving — use when it helps delivery)*
+   Turn the narrative, module spine, and teaching plan into the live-learning
    sequence:
    - opening problem or historical frame
    - mechanism made visible
@@ -261,7 +240,7 @@ brief.
    Produce durable figures after the inventory is agreed, using `module-visuals`
    one asset at a time. When multiple SVGs, diagrams, or animations are needed,
    create a standalone `visual-prompts.md` or equivalent prompt file first.
-   The prompt file should include topic context, design system references,
+   The prompt file should include topic context, design-system references,
    layout, labels, teaching goal, variants, and avoid lists without referring
    back to specific slides, lessons, or module prose. Insert finished figures
    into slides directly. For platform modules where image upload is manual, add
@@ -283,16 +262,16 @@ brief.
 
 12. **Artefact plan**
    Choose only the outputs needed for the workshop. Common handoffs:
-   - a social-post skill for public posts (e.g. LinkedIn promotion)
-   - a slide-deck skill for slide decks and whiteboard targets
-   - a module-authoring skill for platform-ready learner-facing module content
-   - a module-review skill for learner-facing modules before import or delivery,
+   - `linkedin-workshop-posts` for public LinkedIn posts
+   - `fac-workshop-slides` for FAC slide decks and whiteboard targets
+   - `curriculum-module` for platform-ready learner-facing module content
+   - `module-review` for learner-facing modules before import or delivery,
      including code verification when the module contains runnable code
    - `module-visuals` for diagrams, animations, and whiteboard visuals
 
 13. **Verification**
    Before treating a learner-facing module as ready for platform import or
-   delivery, run a module-review skill. Check continuity, completeness, relevance,
+   delivery, run `module-review`. Check continuity, completeness, relevance,
    platform fit, questions, and setup. When the module contains runnable code,
    include code verification: learner commands, snippets, expected outputs,
    stochastic behaviour, and final behaviour.
@@ -303,76 +282,70 @@ brief.
 
 ## Rules
 
-- Story comes first, artefacts follow.
-- History is the primary hook, but only where it creates learner action.
-- Public-facing story artefacts are part of the design path when the workshop is
-  being shaped for an audience: brief, synopsis, website copy, then LinkedIn
-  post.
+- The four upstream artefacts (discussion.md, questions.md, narrative.md,
+  slides.md) must exist before any public copy, visuals, or module is built.
+- Read `narrative.md` before building anything downstream. It is the source of
+  truth for framing, vocabulary, and beat order.
 - Prefer one coherent story over several interesting side stories.
 - Use failure cases and limitations as bridges to the next concept.
-- Default artefact order is brief, synopsis, website copy, LinkedIn post, slide
-  beats, figure captions, slide questions, first-pass figures, Slidev test deck
-  with beats as speaker notes, then iteration on figures and text. Module prose,
-  module review, delivery notes, and platform import follow after the live story
-  and deck shape are settled.
-- Learner-facing modules must be reviewed with a module-review skill before they
-  are treated as ready for platform import or delivery.
-- Preserve vocabulary and framing across synopsis, posts, website copy, slides,
-  module content, and visuals.
-- When the requested work is only production from an already agreed brief, skip
-  new dialogue and hand off directly to the relevant downstream skill.
+- Default artefact order: discussion.md, questions.md, narrative.md, slides.md,
+  website.md, linkedin.md, visual artefacts, Slidev deck, module, verification.
+- Learner-facing modules must be reviewed with `module-review` before they are
+  treated as ready for platform import or delivery.
+- Preserve vocabulary and framing across website copy, LinkedIn posts, slides,
+  module content, and visuals. Derive all of these from the narrative, not
+  independently.
+- When the requested work starts from an existing narrative.md, skip grilling
+  and questions and proceed directly from the spine.
 
 ## File layout
 
-For concrete workshops in your workspace, use a short, human-readable folder
-name rather than a long title slug:
+For concrete workshops in `/Users/dsofer/code/brain`, topics live under
+`curriculum/` with a short, human-readable folder name:
 
 ```text
-workshops/perceptrons/
-workshops/agent-harness/
-workshops/backpropagation/
+curriculum/perceptrons/
+curriculum/backpropagation/
+curriculum/agent-harness/
 ```
 
-Keep the workshop's source-of-truth artefacts together in that folder, with
-role-based filenames:
+Keep the topic's source-of-truth artefacts together in that folder, in
+production order:
 
 ```text
-workshops/<short-name>/
+curriculum/<topic>/
+  discussion.md
+  questions.md
   narrative.md
-  brief.md
-  teaching-plan.md
-  synopsis.md
+  slides.md
   website.md
   linkedin.md
-  slides.md
   module.md
+  teaching-plan.md
   delivery.md
   assets/
 ```
 
 Use these roles:
 
-- `narrative.md`: the upstream narrative spine (through-line, ordered atomic
-  beats, recall cues, anchors) produced by the `narrative` skill. When present,
-  it is the recall-first source the brief's lineage and the slide beats derive
-  from.
-- `brief.md`: workshop story brief and teaching spine. This is canonical.
-- `teaching-plan.md`: concept sequence, learner actions, vocabulary staging,
-  learning-step questions, likely visual cues, module expansion notes,
-  whiteboard questions, slide deck structure decisions, and open design
-  decisions. It coordinates slides, module prose, and visual prompts. Update it
-  when slide drafting changes the settled teaching sequence.
-- `synopsis.md`: short public or internal synopsis derived from the brief.
+- `discussion.md`: record of the grilling session — what the user found hard,
+  ambiguities, corrections, and the concepts most important to understanding.
+  Produced by the `narrative` skill. Must contain enough to derive questions.md.
+- `questions.md`: atomic Q&A pairs drawn from discussion.md, one per important
+  concept, optimised for recall. Produced by the `narrative` skill.
+- `narrative.md`: the spine — through-line, arc, core beats with cues and
+  anchors, whiteboard exercises (with home beats), and an extension section of
+  E-numbered beats. Produced by the `narrative` skill. Source of truth for all
+  downstream artefacts. `slides.md` draws from core only; `module.md` covers
+  core and extension.
+- `slides.md`: canonical slide-story source. Slide beats, figure captions, and
+  slide questions. One section per beat. The beat becomes the speaker note in
+  the Slidev deck.
 - `website.md`: website workshop description and practical details.
-- `linkedin.md`: LinkedIn post drafts, variants, and posting notes for this
-  workshop.
-- `module.md`: complete learner journey or platform-content design. This should
-  usually have its build spine designed early, then have learner-facing prose
-  revised after the slide and whiteboard spine settles.
-- `slides.md`: canonical slide-story source for the workshop. Store slide beats,
-  figure captions, and slide questions here before the Slidev deck is created.
-  Use one section per slide beat. The beat becomes the speaker note in the
-  Slidev test deck.
+- `linkedin.md`: LinkedIn post drafts, variants, and posting notes.
+- `module.md`: complete learner journey or platform-content design.
+- `teaching-plan.md`: coordination record (evolving) — concept sequence,
+  visual cues, module expansion notes, open decisions.
 - `delivery.md`: facilitator notes, timing, setup, risks, and rehearsal notes.
 - `assets/`: workshop-specific source assets, diagrams, images, screenshots,
   animation scripts, thumbnails, and generated media.
@@ -399,7 +372,7 @@ Use `./assets/<short-name>/...` inside the Slidev deck. If an editable source
 asset is also used by the deck, copy the deck-consumable file into
 `slides/assets/<short-name>/` rather than relying on a symlink or parent-folder
 reference. Keep only genuinely shared deck assets directly under
-`slides/assets/`, such as shared branding, paper fronts reused across decks, QR
+`slides/assets/`, such as FAC branding, paper fronts reused across decks, QR
 codes, and standard closing images.
 
 Rule of thumb: source thinking lives in `workshops/<short-name>/`; shared
